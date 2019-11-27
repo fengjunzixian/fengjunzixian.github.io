@@ -72,7 +72,7 @@ function activateLightMode(){
 <p>优点    解耦,异步,削峰</p>
 <p>缺点    分布式事务问题, 有重复消费,消费丢失,数据顺序相关问题</p>
 <p>选型与优缺点:     </p>
-<p> <img alt="img" data-src="/fengjunzixian.github.io/fengjunzixian.github.io/2019/11/27/xiaoxiduilie/H:%5CMoQiLearning%5Chexo%5Csource_posts%5Cxiaoxiduilie%5C1.png" class="lazyload"> </p>
+<p> <img alt="img" data-src="https://javaqi.com/fengjunzixian.github.io/fengjunzixian.github.io/2019/11/27/xiaoxiduilie/1.png" class="lazyload"> </p>
 <p><strong>消息重复消费解决方案</strong></p>
 <p>幂等性(强)    </p>
 <p>​    <strong>比如你监听到用户支付成功的消息，你监听到了去加GMV是不是要调用加钱的接口，那加钱接口下面再调用一个加流水的接口，两个放在一个事务，成功一起成功失败一起失败。</strong></p>
