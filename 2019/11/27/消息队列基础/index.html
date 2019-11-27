@@ -72,7 +72,7 @@ function activateLightMode(){
 <p>优点    解耦,异步,削峰</p>
 <p>缺点    分布式事务问题, 有重复消费,消费丢失,数据顺序相关问题</p>
 <p>选型与优缺点:     </p>
-<p> <img alt="img" data-src="https://mmbiz.qpic.cn/mmbiz_jpg/uChmeeX1Fpw9uCCF3ZWuMgbeMQaqwzUJKnRmbJ5Ufjia98Fq1MicqsoAkBAZuHtYPYQSkbuBMO1vyvf4Udul16kg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" class="lazyload"> </p>
+<p> <img alt="img" data-src="/fengjunzixian.github.io/fengjunzixian.github.io/2019/11/27/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80/H:%5CMoQiLearning%5Chexo%5Csource_posts%5C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80%5C1.png" class="lazyload"> </p>
 <p><strong>消息重复消费解决方案</strong></p>
 <p>幂等性(强)    </p>
 <p>​    <strong>比如你监听到用户支付成功的消息，你监听到了去加GMV是不是要调用加钱的接口，那加钱接口下面再调用一个加流水的接口，两个放在一个事务，成功一起成功失败一起失败。</strong></p>
@@ -82,7 +82,7 @@ function activateLightMode(){
 <p>​    <strong>redis ,半个小时内的短信不必重发,丢失了多发一条也无所谓</strong></p>
 <p>实现消息的顺序消费</p>
 <p> <strong>一个topic下有多个队列</strong>，为了保证发送有序，<strong>RocketMQ</strong>提供了<strong>MessageQueueSelector</strong>队列选择机制，他有三种实现: </p>
-<p> <img alt="img" data-src="https://mmbiz.qpic.cn/mmbiz_png/uChmeeX1FpzjaiaLbo3bKFDic8zvesZQQYqNXMwicnafsv3oSedFeWxvQXxd7iaK1nYwHCVu2ria6iaJsBbqHhl7hZqw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" class="lazyload"> </p>
+<p> <img alt="img" data-src="/fengjunzixian.github.io/fengjunzixian.github.io/2019/11/27/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80/H:%5CMoQiLearning%5Chexo%5Csource_posts%5C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80%5C2.png" class="lazyload"> </p>
 <p>​    <strong>Hash  ID,生产者将订单发送至同一个topic  ,单个消费者处理,保证了顺序性.</strong></p>
 <p><strong>事务以及分布式事务</strong></p>
 <h4 id="特性："><a href="#特性：" class="headerlink" title="特性："></a>特性：</h4><blockquote>
@@ -96,12 +96,12 @@ function activateLightMode(){
 <p>那有同学还是不理解，敖丙我总结了一下就是：<strong>事务就是一系列操作，要么同时成功，要么同时失败。</strong>然后会从事务的 <strong>ACID</strong> 特性<strong>（原子性、一致性、隔离性、持久性）展开叙述</strong>。</p>
 <p>事务就是为了保证一系列操作可以正常执行，它必须同时满足 <strong>ACID</strong> 特性。</p>
 <p><strong>2pc（两段式提交）</strong> :</p>
-<p><img alt="img" data-src="https://mmbiz.qpic.cn/mmbiz_jpg/uChmeeX1FpzjaiaLbo3bKFDic8zvesZQQYzeRTVOMHUU1zjE9ObAdR8nmaL9RGpVM6KarWONOKQsQ7bLOibKcY1icg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" class="lazyload"></p>
+<p><img alt="img" data-src="/fengjunzixian.github.io/fengjunzixian.github.io/2019/11/27/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80/H:%5CMoQiLearning%5Chexo%5Csource_posts%5C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80%5C3.png" class="lazyload"></p>
 <p><strong>2pc（两段式提交）</strong>可以说是分布式事务的最开始的样子了，像极了<strong>媒婆</strong>，就是通过消息中间件协调多个系统，在两个系统操作事务的时候都锁定资源但是不提交事务，等两者都准备好了，告诉消息中间件，然后再分别提交事务。</p>
 <p><strong>但是我不知道大家看到问题所在没有？</strong></p>
 <p>是的你可能已经发现了，如果A系统事务提交成功了，但是B系统在提交的时候网络波动或者各种原因提交失败了，其实还是会失败的。</p>
 <p><strong>最终一致性</strong>：</p>
-<p><img alt="img" data-src="https://mmbiz.qpic.cn/mmbiz_jpg/uChmeeX1FpzjaiaLbo3bKFDic8zvesZQQYGzqjLEEExfaHBB0EkbQvEvIIaiaaAdMtdr12KgEfc0ktpqHMQibnau4g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" class="lazyload"></p>
+<p><img alt="img" data-src="/fengjunzixian.github.io/fengjunzixian.github.io/2019/11/27/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80/H:%5CMoQiLearning%5Chexo%5Csource_posts%5C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9F%BA%E7%A1%80%5C4.png" class="lazyload"></p>
 <p>整个流程中，我们能保证是：</p>
 <ul>
 <li>业务主动方本地事务提交失败，业务被动方不会收到消息的投递。</li>
